@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminModule } from '../admin/admin.module';
+import { UserSavingModule } from '../Saving/userSaving.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { AdminModule } from '../admin/admin.module';
       synchronize: true,
     }),
     AdminModule,
+    UserSavingModule,
   ],
   controllers: [],
   providers: [],
