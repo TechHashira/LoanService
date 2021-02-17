@@ -1,6 +1,13 @@
 import { UserEntity } from 'src/modules/user/entities';
-import { Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
+@Entity({ name: 'user_saving' })
 export class UserSavingEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -11,6 +18,7 @@ export class UserSavingEntity {
   @Column()
   monthlySavingRate: number;
 
-  @ManyToOne(() => UserEntity, (user) => user.userSavingEntity)
+  @ManyToOne(() => UserEntity, (user) => user.userSaving)
+  @JoinColumn()
   user: UserEntity;
 }
