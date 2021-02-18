@@ -1,5 +1,5 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { LoanEntity } from '../entities/loan.entity';
 
-@EntityRepository()
+@EntityRepository(LoanEntity)
 export class LoanRepository extends Repository<LoanEntity> {}

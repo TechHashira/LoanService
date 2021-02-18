@@ -1,5 +1,5 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { WorkSheetUserEntity } from '../entities/worksheetUser.entity';
 
-@EntityRepository()
+@EntityRepository(WorkSheetUserEntity)
 export class WorksheetUserRepository extends Repository<WorkSheetUserEntity> {}

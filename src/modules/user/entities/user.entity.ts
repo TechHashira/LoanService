@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import { RoleType } from 'src/common/constants';
 import { LoanEntity } from 'src/modules/loan/entities/loan.entity';
 import { UserSavingEntity } from 'src/modules/saving/entities/user-saving.entity';
@@ -13,12 +14,13 @@ export class UserEntity {
   role: RoleType;
 
   @Column()
-  name: string;
+  fullname: string;
 
   @Column()
   email: string;
 
   @Column()
+  @Exclude()
   password: string;
 
   @Column()
@@ -32,4 +34,8 @@ export class UserEntity {
 
   @OneToMany(() => WorkSheetUserEntity, (workshetUser) => workshetUser.user)
   workshetUser: WorkSheetUserEntity[];
+
+  constructor(partial: Partial<UserEntity>) {
+    Object.assign(this, partial);
+  }
 }
