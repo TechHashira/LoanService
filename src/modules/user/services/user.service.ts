@@ -25,4 +25,12 @@ export class UserService {
       .where('user_alias.email = :email', { email })
       .getOne();
   }
+
+  public async findUserById(userId: number) {
+    const queryBuilder = this._userRepository.createQueryBuilder('user_alias');
+
+    return await queryBuilder
+      .where('user_alias.id = :userId', { userId })
+      .getOne();
+  }
 }

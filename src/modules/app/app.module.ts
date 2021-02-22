@@ -15,13 +15,13 @@ import { UserModule } from '../user/user.module';
     AuthModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
+      useFactory: async (_configService: ConfigService) => ({
         type: 'mysql',
-        host: configService.get('DB_HOST'),
-        port: configService.get<number>('DB_PORT'),
-        username: configService.get('DB_USERNAME'),
-        password: configService.get('DB_PASSWORD'),
-        database: configService.get('DB_NAME'),
+        host: _configService.get('DB_HOST'),
+        port: _configService.get<number>('DB_PORT'),
+        username: _configService.get('DB_USERNAME'),
+        password: _configService.get('DB_PASSWORD'),
+        database: _configService.get('DB_NAME'),
         entities: [__dirname + '/../../modules/**/*.entity{.ts,.js}'],
         migrations: [__dirname + '/../../migrations/*{.ts,.js}'],
         cli: {

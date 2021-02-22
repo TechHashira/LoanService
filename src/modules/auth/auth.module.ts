@@ -6,7 +6,10 @@ import { UserModule } from '../user/user.module';
 import { AuthController } from './controllers/auth.controller';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthService } from './services/auth.service';
+import { TokenService } from './services/tocken.service';
 import { LocalStrategy } from './strategies/local.strategy';
+import * as redisStore from 'cache-manager-redis-store';
+import { CacheModule } from '@nestjs/common';
 
 @Module({
   imports: [
@@ -16,12 +19,21 @@ import { LocalStrategy } from './strategies/local.strategy';
       imports: [ConfigModule],
       useFactory: (_configService: ConfigService) => ({
         secret: _configService.get<string>('JWT_SECRET'),
-        signOptions: { expiresIn: '5m' },
       }),
       inject: [ConfigService],
     }),
+    CacheModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (_configService: ConfigService) => ({
+        store: redisStore,
+        host: _configService.get('REDIS_HOST'),
+        port: _configService.get('REDIS_PORT'),
+        ttl: _configService.get<number>('TTL'),
+      }),
+    }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, LocalAuthGuard],
+  providers: [AuthService, TokenService, LocalStrategy, LocalAuthGuard],
 })
 export class AuthModule {}
