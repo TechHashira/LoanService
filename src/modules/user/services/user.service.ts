@@ -17,4 +17,12 @@ export class UserService {
       throw new CreatedFailedException(error);
     }
   }
+
+  public async findOne(email: string) {
+    const queryBuilder = this._userRepository.createQueryBuilder('user_alias');
+
+    return await queryBuilder
+      .where('user_alias.email = :email', { email })
+      .getOne();
+  }
 }
