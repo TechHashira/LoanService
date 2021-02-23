@@ -4,6 +4,9 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Cache } from 'cache-manager';
 import { TokenExpiredError } from 'jsonwebtoken';
+import { RefreshTokenRequestDto } from '../dtos/refreshToken.dto';
+import { TokenExpiredException } from '../exceptions/tokenExpired.exception';
+import { TokenMalformedException } from '../exceptions/tokenMalformed.exception';
 import { IRefreshToken } from '../interfaces/refreshToken.interface';
 
 @Injectable()
@@ -15,11 +18,10 @@ export class TokenService {
   ) {}
 
   async generateAccesToken(userId: number) {
-    const expiration = new Date();
-    const exp =
-      expiration.getTime() + Number(this._configService.get<number>('JWT_EXP'));
-
-    return await this._jwtService.signAsync({ sub: userId, exp });
+    return await this._jwtService.signAsync(
+      { sub: userId },
+      { expiresIn: this._configService.get<string>('JWT_EXP') },
+    );
   }
 
   async generateRefreshToken(userId: number) {
@@ -28,7 +30,9 @@ export class TokenService {
       sub: userId,
     };
 
-    const token = await this._jwtService.signAsync(payload);
+    const token = await this._jwtService.signAsync(payload, {
+      secret: this._configService.get<string>('JWT_SECRET_REFRESH_TOKEN'),
+    });
     await this.addRefreshTokenToCacheStore(token, userId);
 
     return token;
@@ -51,7 +55,7 @@ export class TokenService {
     }
 
     if (userIdFromClient !== userIdFromStoredToken) {
-      throw new UnprocessableEntityException('Refresh token malformed');
+      throw new TokenMalformedException();
     }
 
     return { userIdFromClient };
@@ -59,26 +63,46 @@ export class TokenService {
 
   private async decodeRefreshToken(token: string): Promise<IRefreshToken> {
     try {
-      return await this._jwtService.verifyAsync(token);
+      return await this._jwtService.verifyAsync(token, {
+        secret: this._configService.get<string>('JWT_SECRET_REFRESH_TOKEN'),
+      });
     } catch (e) {
       if (e instanceof TokenExpiredError) {
-        throw new UnprocessableEntityException('Refresh token expired');
+        throw new TokenExpiredException();
       } else {
-        throw new UnprocessableEntityException('Refresh token malformed');
+        console.log('aqi');
+        throw new TokenMalformedException();
       }
     }
   }
 
-  public async createAccessTokenFromRefreshToken(
+  private async createAccessTokenFromRefreshToken(
     refresh: string,
-  ): Promise<{ token: string }> {
+  ): Promise<string> {
     const { userIdFromClient } = await this.resolveRefreshToken(refresh);
 
+    if (!userIdFromClient) {
+      throw new TokenMalformedException();
+    }
     const token = await this.generateAccesToken(userIdFromClient);
 
-    return { token };
+    return token;
   }
+
   private async getStoredToken(token: string) {
     return await this._cacheManager.get(token);
+  }
+
+  public async refresh(
+    refreshTokenDto: RefreshTokenRequestDto,
+  ): Promise<{ access_token: string }> {
+    const { refresh_token } = refreshTokenDto;
+
+    console.log(refresh_token);
+    const newAccessToken = await this.createAccessTokenFromRefreshToken(
+      refresh_token,
+    );
+
+    return { access_token: newAccessToken };
   }
 }

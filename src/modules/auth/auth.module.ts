@@ -10,6 +10,8 @@ import { TokenService } from './services/tocken.service';
 import { LocalStrategy } from './strategies/local.strategy';
 import * as redisStore from 'cache-manager-redis-store';
 import { CacheModule } from '@nestjs/common';
+import { JwtAccessTokenStrategy } from './strategies/jwtAccessToken.strategy';
+import { JwtRefreshTokenStrategy } from './strategies/jwtRefreshToken.strategy';
 
 @Module({
   imports: [
@@ -18,7 +20,7 @@ import { CacheModule } from '@nestjs/common';
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: (_configService: ConfigService) => ({
-        secret: _configService.get<string>('JWT_SECRET'),
+        secret: _configService.get<string>('JWT_SECRET_ACCESS_TOKEN'),
       }),
       inject: [ConfigService],
     }),
@@ -34,6 +36,13 @@ import { CacheModule } from '@nestjs/common';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, TokenService, LocalStrategy, LocalAuthGuard],
+  providers: [
+    AuthService,
+    TokenService,
+    LocalStrategy,
+    LocalAuthGuard,
+    JwtAccessTokenStrategy,
+    JwtRefreshTokenStrategy,
+  ],
 })
 export class AuthModule {}
