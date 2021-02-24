@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Cache } from 'cache-manager';
 import { TokenExpiredError } from 'jsonwebtoken';
+import { RoleType } from 'src/common/constants';
 import { RefreshTokenRequestDto } from '../dtos/refreshToken.dto';
 import { TokenExpiredException } from '../exceptions/tokenExpired.exception';
 import { TokenMalformedException } from '../exceptions/tokenMalformed.exception';
@@ -17,17 +18,18 @@ export class TokenService {
     private _configService: ConfigService,
   ) {}
 
-  async generateAccesToken(userId: number) {
+  async generateAccesToken(userId: number, role: RoleType) {
     return await this._jwtService.signAsync(
-      { sub: userId },
+      { sub: userId, role },
       { expiresIn: this._configService.get<string>('JWT_EXP') },
     );
   }
 
-  async generateRefreshToken(userId: number) {
+  async generateRefreshToken(userId: number, role: RoleType) {
     const payload = {
       is_revoked: false,
       sub: userId,
+      role,
     };
 
     const token = await this._jwtService.signAsync(payload, {
@@ -44,9 +46,9 @@ export class TokenService {
 
   async resolveRefreshToken(
     encoded: string,
-  ): Promise<{ userIdFromClient: number }> {
+  ): Promise<{ userIdFromClient: number; role: RoleType }> {
     const payload = await this.decodeRefreshToken(encoded);
-    const { sub: userIdFromClient } = payload;
+    const { sub: userIdFromClient, role } = payload;
 
     const userIdFromStoredToken = await this.getStoredToken(encoded);
 
@@ -58,7 +60,7 @@ export class TokenService {
       throw new TokenMalformedException();
     }
 
-    return { userIdFromClient };
+    return { userIdFromClient, role };
   }
 
   private async decodeRefreshToken(token: string): Promise<IRefreshToken> {
@@ -79,12 +81,12 @@ export class TokenService {
   private async createAccessTokenFromRefreshToken(
     refresh: string,
   ): Promise<string> {
-    const { userIdFromClient } = await this.resolveRefreshToken(refresh);
+    const { userIdFromClient, role } = await this.resolveRefreshToken(refresh);
 
     if (!userIdFromClient) {
       throw new TokenMalformedException();
     }
-    const token = await this.generateAccesToken(userIdFromClient);
+    const token = await this.generateAccesToken(userIdFromClient, role);
 
     return token;
   }

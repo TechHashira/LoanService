@@ -1,15 +1,22 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { UserRegisterDto } from 'src/modules/admin/dtos/registerUser.dto';
+import { AuthService } from 'src/modules/auth/services/auth.service';
 import { CreatedFailedException } from '../exceptions/createdFailed.exception';
 import { UserRepository } from '../repositories/user.repository';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly _userRepository: UserRepository) {}
+  constructor(
+    private _userRepository: UserRepository,
+    @Inject(forwardRef(() => AuthService))
+    private _authService: AuthService,
+  ) {}
 
   public async createUser(userRegisterDto: UserRegisterDto) {
+    const userHashed = await this._authService.hashPassword(userRegisterDto);
+
     try {
-      const user = this._userRepository.create(userRegisterDto);
+      const user = this._userRepository.create(userHashed);
       await this._userRepository.save(user);
 
       return user;
