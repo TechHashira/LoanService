@@ -72,7 +72,6 @@ export class TokenService {
       if (e instanceof TokenExpiredError) {
         throw new TokenExpiredException();
       } else {
-        console.log('aqi');
         throw new TokenMalformedException();
       }
     }
@@ -100,7 +99,6 @@ export class TokenService {
   ): Promise<{ access_token: string }> {
     const { refresh_token } = refreshTokenDto;
 
-    console.log(refresh_token);
     const newAccessToken = await this.createAccessTokenFromRefreshToken(
       refresh_token,
     );
