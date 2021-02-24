@@ -12,6 +12,7 @@ import * as redisStore from 'cache-manager-redis-store';
 import { CacheModule } from '@nestjs/common';
 import { JwtAccessTokenStrategy } from './strategies/jwtAccessToken.strategy';
 import { JwtRefreshTokenStrategy } from './strategies/jwtRefreshToken.strategy';
+import { JwtAccessTokenGuard } from './guards/jwtAccessToken.guard';
 
 @Module({
   imports: [
@@ -36,11 +37,12 @@ import { JwtRefreshTokenStrategy } from './strategies/jwtRefreshToken.strategy';
     }),
   ],
   controllers: [AuthController],
-  exports: [AuthService],
+  exports: [AuthService, JwtAccessTokenGuard],
   providers: [
     AuthService,
     TokenService,
     LocalStrategy,
+    JwtAccessTokenGuard,
     LocalAuthGuard,
     JwtAccessTokenStrategy,
     JwtRefreshTokenStrategy,

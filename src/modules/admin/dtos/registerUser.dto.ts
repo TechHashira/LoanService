@@ -7,6 +7,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { RoleType } from 'src/common/constants';
 
 export class UserRegisterDto {
   @IsString()
@@ -14,6 +15,10 @@ export class UserRegisterDto {
   @IsNotEmpty()
   @ApiProperty({ maxLength: 30 })
   readonly fullname: string;
+
+  @IsString()
+  @ApiProperty()
+  readonly role?: RoleType;
 
   @IsString()
   @IsEmail()
