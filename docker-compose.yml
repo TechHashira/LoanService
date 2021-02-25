@@ -1,0 +1,30 @@
+version: '3'
+services:
+  mysql:
+    image: mysql
+    container_name: mysql
+    ports:
+      - '${DB_PORT}:${DB_PORT}'
+    volumes:
+      - mysqlstorage:/var/lib/mysql
+    environment:
+      - 'MYSQL_USER=${DB_USERNAME}'
+      - 'MYSQL_ROOT_PASSWORD=${DB_PASSWORD}'
+      - 'MYSQL_DATABASE=${DB_NAME}'
+  redis:
+    image: redis
+    container_name: redis
+  web:
+    build: .
+    links:
+      - redis
+      - mysql
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    networks:
+      - default
+    env_file: ./.env
+    environment:
+      WAIT_HOST: mysql:${DB_PORT}
+volumes:
+  mysqlstorage:
