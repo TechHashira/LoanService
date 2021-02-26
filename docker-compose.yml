@@ -15,7 +15,7 @@ services:
     image: redis
     container_name: redis
   web:
-    build: .
+    image: bunnycoder220/loanservice:0.3
     links:
       - redis
       - mysql
