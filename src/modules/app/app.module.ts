@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminModule } from '../admin/admin.module';
 import { AuthModule } from '../auth/auth.module';
+import { LoanModule } from '../loan/loan.module';
 import { UserModule } from '../user/user.module';
 
 @Module({
@@ -10,6 +11,7 @@ import { UserModule } from '../user/user.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    LoanModule,
     AdminModule,
     UserModule,
     AuthModule,

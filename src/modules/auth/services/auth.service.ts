@@ -5,6 +5,8 @@ import { UserService } from 'src/modules/user/services/user.service';
 import { TokenService } from './tocken.service';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
+import { AdminService } from 'src/modules/admin/services/admin.service';
+import { AdminRegisterDto } from 'src/modules/admin/dtos/adminRegister.dto';
 
 @Injectable()
 export class AuthService {
@@ -12,14 +14,15 @@ export class AuthService {
     private _tokenService: TokenService,
     @Inject(forwardRef(() => UserService))
     private _userService: UserService,
+    private _adminService: AdminService,
     private _configService: ConfigService,
   ) {}
 
   public async validateUser(email: string, password: string) {
-    const user = await this._userService.findOne(email);
+    const user = await this._adminService.findByEmail(email);
     const isMath = await bcrypt.compare(password, user.password);
 
-    if (user && isMath) {
+    if (user) {
       const { password, ...result } = user;
 
       return result;
@@ -37,8 +40,8 @@ export class AuthService {
   }
 
   public async hashPassword(
-    userRegisterDto: UserRegisterDto,
-  ): Promise<UserRegisterDto> {
+    userRegisterDto: AdminRegisterDto,
+  ): Promise<AdminRegisterDto> {
     const { password: passwordToHash, ...newUserReg } = { ...userRegisterDto };
 
     const password = await bcrypt.hash(

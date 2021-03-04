@@ -13,9 +13,11 @@ import { CacheModule } from '@nestjs/common';
 import { JwtAccessTokenStrategy } from './strategies/jwtAccessToken.strategy';
 import { JwtRefreshTokenStrategy } from './strategies/jwtRefreshToken.strategy';
 import { JwtAccessTokenGuard } from './guards/jwtAccessToken.guard';
+import { AdminModule } from '../admin/admin.module';
 
 @Module({
   imports: [
+    forwardRef(() => AdminModule),
     forwardRef(() => UserModule),
     PassportModule,
     JwtModule.registerAsync({
