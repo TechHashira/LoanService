@@ -34,6 +34,7 @@ import { AdminModule } from '../admin/admin.module';
         store: redisStore,
         host: _configService.get('REDIS_HOST'),
         port: _configService.get('REDIS_PORT'),
+        password: _configService.get('REDIS_PASSWORD'),
         ttl: _configService.get<number>('TTL'),
       }),
     }),
