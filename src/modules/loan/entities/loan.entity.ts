@@ -18,9 +18,6 @@ export class LoanEntity {
   @Column()
   interest: number;
 
-  @Column()
-  monthlyFee: number;
-
   @ManyToOne(() => UserEntity, (user) => user.loan)
   @JoinColumn()
   user: UserEntity;
