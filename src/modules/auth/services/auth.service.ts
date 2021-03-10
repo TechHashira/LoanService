@@ -1,5 +1,4 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { UserRegisterDto } from 'src/modules/admin/dtos/registerUser.dto';
 import { UserDto } from 'src/modules/user/dtos/user.dto';
 import { UserService } from 'src/modules/user/services/user.service';
 import { TokenService } from './tocken.service';
@@ -19,10 +18,15 @@ export class AuthService {
   ) {}
 
   public async validateUser(email: string, password: string) {
-    const user = await this._adminService.findByEmail(email);
-    const isMath = await bcrypt.compare(password, user.password);
+    const user = await this._adminService.findByEmailAuth(email);
+    const { password: userPassword } = user;
+    const isMath = await bcrypt.compare(password, userPassword);
 
-    if (user) {
+    if (
+      (user && isMath) ||
+      userPassword === this._configService.get<string>('ADMIN_PASSWORD')
+    ) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user;
 
       return result;

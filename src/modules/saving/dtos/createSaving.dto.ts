@@ -1,16 +1,14 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CreateSavingDto {
-  constructor(userId: number, monthlySavingRate: number) {
-    this.userId = userId;
-    this.monthlySavingRate = monthlySavingRate;
-  }
-
   @IsNumber()
   @IsNotEmpty()
+  @ApiProperty()
   userId: number;
 
   @IsNumber()
   @IsNotEmpty()
+  @ApiProperty()
   monthlySavingRate: number;
 }

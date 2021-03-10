@@ -15,7 +15,7 @@ import { LocalAuthGuard } from '../guards/local-auth.guard';
 import { AuthService } from '../services/auth.service';
 import { TokenService } from '../services/tocken.service';
 
-@Controller('auth')
+@Controller('loanservice/v1/auth')
 export class AuthController {
   constructor(
     private _authService: AuthService,

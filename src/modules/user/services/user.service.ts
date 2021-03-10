@@ -1,7 +1,8 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { QueryParamsDto } from 'src/common/dtos/queryOptions.dto';
 import { UserRegisterDto } from 'src/modules/admin/dtos/registerUser.dto';
 import { AuthService } from 'src/modules/auth/services/auth.service';
-import { UserSavingService } from 'src/modules/saving/services/userSaving.service';
+import { UserEntity } from '../entities';
 import { CreatedFailedException } from '../exceptions/createdFailed.exception';
 import { UserNotFoundException } from '../exceptions/userNotFound.exception';
 import { UserRepository } from '../repositories/user.repository';
@@ -12,25 +13,22 @@ export class UserService {
     private _userRepository: UserRepository,
     @Inject(forwardRef(() => AuthService))
     private _authService: AuthService,
-    private _userSavingService: UserSavingService,
   ) {}
 
-  public async createUser(userRegisterDto: UserRegisterDto) {
+  public async createUser(
+    userRegisterDto: UserRegisterDto,
+  ): Promise<UserEntity> {
     try {
       const user = this._userRepository.create(userRegisterDto);
       await this._userRepository.save(user);
 
-      const { id: userId } = user;
-      const { monthlySavingRate } = userRegisterDto;
-
-      await this._userSavingService.createSaving(userId, monthlySavingRate);
       return user;
     } catch ({ message }) {
       throw new CreatedFailedException(message);
     }
   }
 
-  public async findOne(email: string) {
+  public async findUserByEmail(email: string): Promise<UserEntity> {
     const queryBuilder = this._userRepository.createQueryBuilder('user_alias');
 
     try {
@@ -44,11 +42,21 @@ export class UserService {
     }
   }
 
-  public async findUserById(userId: number) {
+  public async findUserById(userId: number): Promise<UserEntity> {
     const queryBuilder = this._userRepository.createQueryBuilder('user_alias');
 
     return await queryBuilder
       .where('user_alias.id = :userId', { userId })
       .getOne();
+  }
+
+  public async findAllUsers(
+    queryParamsDto: QueryParamsDto,
+  ): Promise<Array<UserEntity>> {
+    const { take } = queryParamsDto;
+    const queryBuilder = this._userRepository.createQueryBuilder('user_alias');
+    const users = await queryBuilder.take(take).getMany();
+
+    return users;
   }
 }

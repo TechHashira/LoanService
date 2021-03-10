@@ -12,7 +12,7 @@ export class UserSavingEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ default: 0 })
   dividendsEarned: number;
 
   @Column()
