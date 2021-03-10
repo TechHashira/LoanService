@@ -12,7 +12,7 @@ import { RolesGuard } from 'src/guards/roles.guard';
 import { JwtAccessTokenGuard } from 'src/modules/auth/guards/jwtAccessToken.guard';
 import { LoanService } from '../services/loan.service';
 
-@Controller('loanservice/v1/admin/')
+@Controller('loanservice/v1/admin')
 export class LoanController {
   constructor(private _loanService: LoanService) {}
 
