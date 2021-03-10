@@ -1,7 +1,6 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { UserRegisterDto } from 'src/modules/admin/dtos/registerUser.dto';
 import { AuthService } from 'src/modules/auth/services/auth.service';
-import { UserSavingService } from 'src/modules/saving/services/userSaving.service';
 import { CreatedFailedException } from '../exceptions/createdFailed.exception';
 import { UserNotFoundException } from '../exceptions/userNotFound.exception';
 import { UserRepository } from '../repositories/user.repository';
@@ -12,7 +11,6 @@ export class UserService {
     private _userRepository: UserRepository,
     @Inject(forwardRef(() => AuthService))
     private _authService: AuthService,
-    private _userSavingService: UserSavingService,
   ) {}
 
   public async createUser(userRegisterDto: UserRegisterDto) {

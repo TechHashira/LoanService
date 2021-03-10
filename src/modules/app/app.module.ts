@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminModule } from '../admin/admin.module';
 import { AuthModule } from '../auth/auth.module';
 import { LoanModule } from '../loan/loan.module';
+import { SavingModule } from '../saving/saving.module';
 import { UserModule } from '../user/user.module';
 import { WorksheetModule } from '../worksheet/worksheet.module';
 
@@ -17,6 +18,7 @@ import { WorksheetModule } from '../worksheet/worksheet.module';
     UserModule,
     AuthModule,
     WorksheetModule,
+    SavingModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (_configService: ConfigService) => ({

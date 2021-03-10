@@ -1,11 +1,12 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserModule } from '../user/user.module';
 import { UserSavingRepository } from './repositories/userSaving.repository';
 import { UserSavingService } from './services/userSaving.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserSavingRepository])],
-  providers: [UserSavingService],
+  imports: [UserModule, TypeOrmModule.forFeature([UserSavingRepository])],
   exports: [UserSavingService],
+  providers: [UserSavingService],
 })
 export class SavingModule {}
