@@ -7,11 +7,9 @@ import { UserSavingRepository } from '../repositories/userSaving.repository';
 export class UserSavingService {
   constructor(private _userSavingRepository: UserSavingRepository) {}
 
-  public async createSaving(userId: number, monthlyRate: number) {
-    const userSaving = new CreateSavingDto(userId, monthlyRate);
-
+  public async createSaving(createSavingDto: CreateSavingDto) {
     try {
-      const saving = this._userSavingRepository.create(userSaving);
+      const saving = this._userSavingRepository.create(createSavingDto);
       await this._userSavingRepository.save(saving);
       return saving;
     } catch ({ message }) {

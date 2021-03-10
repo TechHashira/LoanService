@@ -5,6 +5,7 @@ import { AdminModule } from '../admin/admin.module';
 import { AuthModule } from '../auth/auth.module';
 import { LoanModule } from '../loan/loan.module';
 import { UserModule } from '../user/user.module';
+import { WorksheetModule } from '../worksheet/worksheet.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { UserModule } from '../user/user.module';
     AdminModule,
     UserModule,
     AuthModule,
+    WorksheetModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (_configService: ConfigService) => ({

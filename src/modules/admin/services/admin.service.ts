@@ -21,4 +21,20 @@ export class AdminService {
       throw new UserNotFoundException();
     }
   }
+
+  public async findById(id: number) {
+    const queryBuilder = this._adminRepository.createQueryBuilder(
+      'admin_alias',
+    );
+
+    try {
+      const admin = await queryBuilder
+        .where('admin_alias.id = :id', { id })
+        .getOneOrFail();
+
+      return admin;
+    } catch (error) {
+      throw new UserNotFoundException();
+    }
+  }
 }

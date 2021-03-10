@@ -20,10 +20,6 @@ export class UserService {
       const user = this._userRepository.create(userRegisterDto);
       await this._userRepository.save(user);
 
-      const { id: userId } = user;
-      const { monthlySavingRate } = userRegisterDto;
-
-      await this._userSavingService.createSaving(userId, monthlySavingRate);
       return user;
     } catch ({ message }) {
       throw new CreatedFailedException(message);

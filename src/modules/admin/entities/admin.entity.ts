@@ -1,4 +1,5 @@
 import { Exclude } from 'class-transformer';
+import { RoleType } from 'src/common/constants/role-type.constants';
 import { UserEntity } from 'src/modules/user/entities';
 import { WorksheetEntity } from 'src/modules/worksheet/entities/worksheet.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
@@ -10,6 +11,9 @@ export class AdminEntity {
 
   @Column()
   email: string;
+
+  @Column({ type: 'enum', enum: RoleType, default: RoleType.ADMIN })
+  role: RoleType;
 
   @Column()
   @Exclude()
