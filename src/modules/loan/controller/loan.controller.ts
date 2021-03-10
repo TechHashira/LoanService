@@ -29,4 +29,11 @@ export class LoanController {
   async getAllLoans(queryParamsDto: QueryParamsDto) {
     return this._loanService.getAllLoans(queryParamsDto);
   }
+
+  @Get('users/:id/loans')
+  @Roles(RoleType.ADMIN)
+  @UseGuards(JwtAccessTokenGuard, RolesGuard)
+  async getAllLoansByUserId(@Param('id', ParseIntPipe) id: number) {
+    return this._loanService.getAllLoansByUserId(id);
+  }
 }

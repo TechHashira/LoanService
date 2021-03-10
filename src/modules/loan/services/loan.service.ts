@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryParamsDto } from 'src/common/dtos/queryOptions.dto';
 import { CreatedFailedException } from 'src/modules/user/exceptions/createdFailed.exception';
+import { UserNotFoundException } from 'src/modules/user/exceptions/userNotFound.exception';
 import { UserService } from 'src/modules/user/services/user.service';
 import { CreateLoanDto } from '../dtos/createLoan.dto';
 import { LoanEntity } from '../entities/loan.entity';
@@ -41,5 +42,19 @@ export class LoanService {
     return await queryBuilder
       .where('loan_alias.id = :loanId', { loanId })
       .getOne();
+  }
+
+  public async getAllLoansByUserId(id: number): Promise<Array<LoanEntity>> {
+    const queryBuilder = this._loanRepository.createQueryBuilder('loan_alias');
+
+    try {
+      const loans = await queryBuilder
+        .where('loan_alias.userId = :id', { id })
+        .getMany();
+
+      return loans;
+    } catch ({ message }) {
+      throw new UserNotFoundException(message);
+    }
   }
 }
