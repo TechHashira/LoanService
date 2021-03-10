@@ -25,7 +25,6 @@ var __rest = (this && this.__rest) || function (s, e) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
-const registerUser_dto_1 = require("../../admin/dtos/registerUser.dto");
 const user_dto_1 = require("../../user/dtos/user.dto");
 const user_service_1 = require("../../user/services/user.service");
 const tocken_service_1 = require("./tocken.service");
@@ -41,9 +40,11 @@ let AuthService = class AuthService {
         this._configService = _configService;
     }
     async validateUser(email, password) {
-        const user = await this._adminService.findByEmail(email);
-        const isMath = await bcrypt.compare(password, user.password);
-        if (user) {
+        const user = await this._adminService.findByEmailAuth(email);
+        const { password: userPassword } = user;
+        const isMath = await bcrypt.compare(password, userPassword);
+        if ((user && isMath) ||
+            userPassword === this._configService.get('ADMIN_PASSWORD')) {
             const { password } = user, result = __rest(user, ["password"]);
             return result;
         }

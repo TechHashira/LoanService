@@ -10,7 +10,10 @@ exports.AdminModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const auth_module_1 = require("../auth/auth.module");
+const loan_module_1 = require("../loan/loan.module");
+const saving_module_1 = require("../saving/saving.module");
 const user_module_1 = require("../user/user.module");
+const worksheet_module_1 = require("../worksheet/worksheet.module");
 const admin_controller_1 = require("./controllers/admin.controller");
 const admin_repository_1 = require("./repositories/admin.repository");
 const admin_service_1 = require("./services/admin.service");
@@ -21,8 +24,12 @@ AdminModule = __decorate([
         imports: [
             user_module_1.UserModule,
             auth_module_1.AuthModule,
+            saving_module_1.SavingModule,
+            loan_module_1.LoanModule,
+            worksheet_module_1.WorksheetModule,
             typeorm_1.TypeOrmModule.forFeature([admin_repository_1.AdminRepository]),
             common_1.forwardRef(() => auth_module_1.AuthModule),
+            common_1.forwardRef(() => worksheet_module_1.WorksheetModule),
         ],
         providers: [admin_service_1.AdminService],
         exports: [admin_service_1.AdminService],

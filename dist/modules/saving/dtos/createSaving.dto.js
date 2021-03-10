@@ -10,21 +10,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateSavingDto = void 0;
+const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class CreateSavingDto {
-    constructor(userId, monthlySavingRate) {
-        this.userId = userId;
-        this.monthlySavingRate = monthlySavingRate;
-    }
 }
 __decorate([
     class_validator_1.IsNumber(),
     class_validator_1.IsNotEmpty(),
+    swagger_1.ApiProperty(),
     __metadata("design:type", Number)
 ], CreateSavingDto.prototype, "userId", void 0);
 __decorate([
     class_validator_1.IsNumber(),
     class_validator_1.IsNotEmpty(),
+    swagger_1.ApiProperty(),
     __metadata("design:type", Number)
 ], CreateSavingDto.prototype, "monthlySavingRate", void 0);
 exports.CreateSavingDto = CreateSavingDto;

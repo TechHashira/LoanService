@@ -60,7 +60,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "getUser", null);
 AuthController = __decorate([
-    common_1.Controller('auth'),
+    common_1.Controller('loanservice/v1/auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService,
         tocken_service_1.TokenService])
 ], AuthController);

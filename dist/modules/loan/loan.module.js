@@ -9,12 +9,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoanModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
+const user_module_1 = require("../user/user.module");
+const loan_controller_1 = require("./controller/loan.controller");
 const loan_repository_1 = require("./repositories/loan.repository");
+const loan_service_1 = require("./services/loan.service");
 let LoanModule = class LoanModule {
 };
 LoanModule = __decorate([
     common_1.Module({
-        imports: [typeorm_1.TypeOrmModule.forFeature([loan_repository_1.LoanRepository])],
+        imports: [user_module_1.UserModule, typeorm_1.TypeOrmModule.forFeature([loan_repository_1.LoanRepository])],
+        exports: [loan_service_1.LoanService],
+        providers: [loan_service_1.LoanService],
+        controllers: [loan_controller_1.LoanController],
     })
 ], LoanModule);
 exports.LoanModule = LoanModule;

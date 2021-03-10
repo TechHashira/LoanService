@@ -9,15 +9,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SavingModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
+const user_module_1 = require("../user/user.module");
+const saving_controller_1 = require("./controllers/saving.controller");
 const userSaving_repository_1 = require("./repositories/userSaving.repository");
 const userSaving_service_1 = require("./services/userSaving.service");
 let SavingModule = class SavingModule {
 };
 SavingModule = __decorate([
     common_1.Module({
-        imports: [typeorm_1.TypeOrmModule.forFeature([userSaving_repository_1.UserSavingRepository])],
-        providers: [userSaving_service_1.UserSavingService],
+        imports: [user_module_1.UserModule, typeorm_1.TypeOrmModule.forFeature([userSaving_repository_1.UserSavingRepository])],
         exports: [userSaving_service_1.UserSavingService],
+        providers: [userSaving_service_1.UserSavingService],
+        controllers: [saving_controller_1.UserSavingController],
     })
 ], SavingModule);
 exports.SavingModule = SavingModule;

@@ -6,13 +6,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Worksheet = void 0;
+exports.WorksheetRepository = void 0;
 const typeorm_1 = require("typeorm");
 const worksheet_entity_1 = require("../entities/worksheet.entity");
-let Worksheet = class Worksheet extends typeorm_1.Repository {
+let WorksheetRepository = class WorksheetRepository extends typeorm_1.Repository {
 };
-Worksheet = __decorate([
+WorksheetRepository = __decorate([
     typeorm_1.EntityRepository(worksheet_entity_1.WorksheetEntity)
-], Worksheet);
-exports.Worksheet = Worksheet;
+], WorksheetRepository);
+exports.WorksheetRepository = WorksheetRepository;
 //# sourceMappingURL=worksheet.repository.js.map

@@ -13,6 +13,7 @@ export declare class AuthService {
     validateUser(email: string, password: string): Promise<{
         id: number;
         email: string;
+        role: import("../../../common/constants").RoleType;
         worksheet: import("../../worksheet/entities/worksheet.entity").WorksheetEntity[];
     }>;
     login(user: UserDto): Promise<{

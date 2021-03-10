@@ -10,7 +10,6 @@ exports.UserModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const auth_module_1 = require("../auth/auth.module");
-const saving_module_1 = require("../saving/saving.module");
 const user_controller_1 = require("./controllers/user.controller");
 const user_repository_1 = require("./repositories/user.repository");
 const user_service_1 = require("./services/user.service");
@@ -19,7 +18,6 @@ let UserModule = class UserModule {
 UserModule = __decorate([
     common_1.Module({
         imports: [
-            saving_module_1.SavingModule,
             common_1.forwardRef(() => auth_module_1.AuthModule),
             typeorm_1.TypeOrmModule.forFeature([user_repository_1.UserRepository]),
         ],

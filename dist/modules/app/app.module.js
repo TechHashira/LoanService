@@ -13,7 +13,9 @@ const typeorm_1 = require("@nestjs/typeorm");
 const admin_module_1 = require("../admin/admin.module");
 const auth_module_1 = require("../auth/auth.module");
 const loan_module_1 = require("../loan/loan.module");
+const saving_module_1 = require("../saving/saving.module");
 const user_module_1 = require("../user/user.module");
+const worksheet_module_1 = require("../worksheet/worksheet.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -26,6 +28,8 @@ AppModule = __decorate([
             admin_module_1.AdminModule,
             user_module_1.UserModule,
             auth_module_1.AuthModule,
+            worksheet_module_1.WorksheetModule,
+            saving_module_1.SavingModule,
             typeorm_1.TypeOrmModule.forRootAsync({
                 imports: [config_1.ConfigModule],
                 useFactory: async (_configService) => ({

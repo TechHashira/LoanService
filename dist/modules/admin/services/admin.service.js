@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AdminService = void 0;
 const common_1 = require("@nestjs/common");
+const EmailOrPasswordWrong_exception_1 = require("../../auth/exceptions/EmailOrPasswordWrong.exception");
 const userNotFound_exception_1 = require("../../user/exceptions/userNotFound.exception");
 const admin_repository_1 = require("../repositories/admin.repository");
 let AdminService = class AdminService {
@@ -24,6 +25,30 @@ let AdminService = class AdminService {
                 .where('admin_alias.email = :email', { email })
                 .getOneOrFail();
             return user;
+        }
+        catch ({ message }) {
+            throw new userNotFound_exception_1.UserNotFoundException(message);
+        }
+    }
+    async findByEmailAuth(email) {
+        const queryBuilder = this._adminRepository.createQueryBuilder('admin_alias');
+        try {
+            const user = await queryBuilder
+                .where('admin_alias.email = :email', { email })
+                .getOneOrFail();
+            return user;
+        }
+        catch ({ message }) {
+            throw new EmailOrPasswordWrong_exception_1.EmailOrPasswordWrong('Email or password Wrong :)');
+        }
+    }
+    async findById(id) {
+        const queryBuilder = this._adminRepository.createQueryBuilder('admin_alias');
+        try {
+            const admin = await queryBuilder
+                .where('admin_alias.id = :id', { id })
+                .getOneOrFail();
+            return admin;
         }
         catch (error) {
             throw new userNotFound_exception_1.UserNotFoundException();

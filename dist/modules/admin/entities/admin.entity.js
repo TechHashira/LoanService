@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AdminEntity = void 0;
 const class_transformer_1 = require("class-transformer");
+const role_type_constants_1 = require("../../../common/constants/role-type.constants");
 const entities_1 = require("../../user/entities");
 const worksheet_entity_1 = require("../../worksheet/entities/worksheet.entity");
 const typeorm_1 = require("typeorm");
@@ -27,6 +28,10 @@ __decorate([
     typeorm_1.Column(),
     __metadata("design:type", String)
 ], AdminEntity.prototype, "email", void 0);
+__decorate([
+    typeorm_1.Column({ type: 'enum', enum: role_type_constants_1.RoleType, default: role_type_constants_1.RoleType.ADMIN }),
+    __metadata("design:type", String)
+], AdminEntity.prototype, "role", void 0);
 __decorate([
     typeorm_1.Column(),
     class_transformer_1.Exclude(),

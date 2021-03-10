@@ -19,7 +19,7 @@ __decorate([
     __metadata("design:type", Number)
 ], UserSavingEntity.prototype, "id", void 0);
 __decorate([
-    typeorm_1.Column(),
+    typeorm_1.Column({ default: 0 }),
     __metadata("design:type", Number)
 ], UserSavingEntity.prototype, "dividendsEarned", void 0);
 __decorate([
