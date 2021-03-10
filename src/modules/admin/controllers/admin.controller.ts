@@ -24,7 +24,7 @@ import { CreateWorksheetUserDto } from 'src/modules/worksheet/dtos/createWorkshe
 import { WorksheetService } from 'src/modules/worksheet/services/worksheet.service';
 import { LoanResponseDto } from '../dtos/loanResponse.dto';
 
-@Controller('admin')
+@Controller('loanservice/v1/admin')
 export class AdminController {
   constructor(
     private readonly _userService: UserService,
