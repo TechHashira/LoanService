@@ -3,6 +3,7 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { RoleType } from 'src/common/constants';
@@ -26,7 +27,7 @@ export class LoanController {
   @Get('loans')
   @Roles(RoleType.ADMIN)
   @UseGuards(JwtAccessTokenGuard, RolesGuard)
-  async getAllLoans(queryParamsDto: QueryParamsDto) {
+  async getAllLoans(@Query() queryParamsDto: QueryParamsDto) {
     return this._loanService.getAllLoans(queryParamsDto);
   }
 

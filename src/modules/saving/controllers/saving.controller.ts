@@ -3,6 +3,7 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { RoleType } from 'src/common/constants';
@@ -26,7 +27,7 @@ export class UserSavingController {
   @Get('savings')
   @Roles(RoleType.ADMIN)
   @UseGuards(JwtAccessTokenGuard, RolesGuard)
-  async getAllSavings(queryParamsDto: QueryParamsDto) {
+  async getAllSavings(@Query() queryParamsDto: QueryParamsDto) {
     return this.__userSavingService.getAllSavings(queryParamsDto);
   }
 
