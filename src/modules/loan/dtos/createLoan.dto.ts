@@ -12,7 +12,7 @@ export class CreateLoanDto {
   @IsNumber()
   @IsPositive()
   @ApiProperty()
-  loanAmount: number;
+  loanAmounth: number;
 
   @IsNotEmpty()
   @IsNumber()
