@@ -17,6 +17,7 @@ class UserRegisterDto {
 }
 __decorate([
     class_validator_1.IsString(),
+    class_validator_1.IsOptional(),
     swagger_1.ApiProperty(),
     __metadata("design:type", String)
 ], UserRegisterDto.prototype, "role", void 0);
@@ -34,10 +35,5 @@ __decorate([
     swagger_1.ApiProperty({ minLength: 9, maxLength: 9 }),
     __metadata("design:type", String)
 ], UserRegisterDto.prototype, "telephone", void 0);
-__decorate([
-    class_validator_1.IsNumber(),
-    class_validator_1.IsNotEmpty(),
-    __metadata("design:type", Number)
-], UserRegisterDto.prototype, "monthlySavingRate", void 0);
 exports.UserRegisterDto = UserRegisterDto;
 //# sourceMappingURL=registerUser.dto.js.map

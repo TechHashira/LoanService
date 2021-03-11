@@ -4422,8 +4422,8 @@
         "affectsGlobalScope": false
       },
       "../src/modules/admin/dtos/registerUser.dto.ts": {
-        "version": "4ca8cc09238e9667745a419be60af61f2aab48bce2828123ae2bb7a252edd6bf",
-        "signature": "3ba300e0e30a76996f8fc00bf0d399e27151b575c28482232831abb096495b0a",
+        "version": "3e0c6c066d1f5870c8f2927d4be3655724247556d072de8166242bdba1f2f765",
+        "signature": "f6a1e244de032ebc011a3b08c35e280a23269970eba19d1f10dae86c2298c7ff",
         "affectsGlobalScope": false
       },
       "../src/modules/user/dtos/user.dto.ts": {
