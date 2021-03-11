@@ -1,10 +1,10 @@
 # .env
 .env
 .env.prod
-# compiled output
 /dist
+# compiled output
 /node_modules
-
+/src
 # Logs
 logs
 *.log
