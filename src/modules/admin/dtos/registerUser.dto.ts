@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsNotEmpty,
-  IsNumber,
+  IsOptional,
   IsString,
   Length,
   MaxLength,
@@ -10,6 +10,7 @@ import { RoleType } from 'src/common/constants';
 
 export class UserRegisterDto {
   @IsString()
+  @IsOptional()
   @ApiProperty()
   readonly role?: RoleType;
 
@@ -24,8 +25,4 @@ export class UserRegisterDto {
   @Length(9, 9)
   @ApiProperty({ minLength: 9, maxLength: 9 })
   readonly telephone: string;
-
-  @IsNumber()
-  @IsNotEmpty()
-  readonly monthlySavingRate: number;
 }
