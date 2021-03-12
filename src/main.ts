@@ -15,7 +15,6 @@ async function bootstrap() {
     .setTitle('LoanService')
     .setDescription('The LoanService description.... TODO: Add Description')
     .setVersion('1.0')
-    .addTag('Loan')
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);

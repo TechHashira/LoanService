@@ -46,15 +46,16 @@ export class UserService {
     const queryBuilder = this._userRepository.createQueryBuilder('user_alias');
 
     return await queryBuilder
+      .select('*')
       .where('user_alias.id = :userId', { userId })
-      .getOne();
+      .execute();
   }
 
   public async findAllUsers(
     queryParamsDto: QueryParamsDto,
   ): Promise<Array<UserEntity>> {
     const { take } = queryParamsDto;
-    const queryBuilder = this._userRepository.createQueryBuilder('user_alias');
+    const queryBuilder = this._userRepository.createQueryBuilder();
     const users = await queryBuilder.take(take).getMany();
 
     return users;

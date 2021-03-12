@@ -8,7 +8,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiOkResponse } from '@nestjs/swagger';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { RoleType } from 'src/common/constants';
 import { Roles } from 'src/common/rolesDecorator/roles.decorator';
 import { RolesGuard } from 'src/guards/roles.guard';
@@ -25,6 +25,7 @@ import { WorksheetService } from 'src/modules/worksheet/services/worksheet.servi
 import { LoanResponseDto } from '../dtos/loanResponse.dto';
 
 @Controller('loanservice/v1/admin')
+@ApiTags('Admin')
 export class AdminController {
   constructor(
     private readonly _userService: UserService,

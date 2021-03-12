@@ -32,10 +32,8 @@ export class UserSavingService {
     queryParamsDto: QueryParamsDto,
   ): Promise<Array<UserSavingEntity>> {
     const { take } = queryParamsDto;
-    const queryBuilder = this._userSavingRepository.createQueryBuilder(
-      'saving_alias',
-    );
-    const savings = queryBuilder.take(take).getMany();
+    const queryBuilder = this._userSavingRepository.createQueryBuilder();
+    const savings = await queryBuilder.take(take).getMany();
 
     return savings;
   }
@@ -43,24 +41,22 @@ export class UserSavingService {
   public async getUserSavingById(
     userSavingId: number,
   ): Promise<UserSavingEntity> {
-    const queryBuilder = this._userSavingRepository.createQueryBuilder(
-      'saving_alias',
-    );
+    const queryBuilder = this._userSavingRepository.createQueryBuilder();
     return await queryBuilder
-      .where('saving_alias.id = :userSavingId', { userSavingId })
-      .getOne();
+      .select('*')
+      .where('id = :userSavingId', { userSavingId })
+      .execute();
   }
 
   public async getAllSavingsByUserId(
     id: number,
   ): Promise<Array<UserSavingEntity>> {
-    const queryBuilder = this._userSavingRepository.createQueryBuilder(
-      'saving_alias',
-    );
+    const queryBuilder = this._userSavingRepository.createQueryBuilder();
     try {
       const savings = await queryBuilder
-        .where('saving_alias.userId = :id', { id })
-        .getMany();
+        .select('*')
+        .where('userId = :id', { id })
+        .execute();
 
       return savings;
     } catch ({ message }) {
