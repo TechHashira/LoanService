@@ -19,6 +19,9 @@ export class LoanEntity {
   interest: number;
 
   @ManyToOne(() => UserEntity, (user) => user.loan)
-  @JoinColumn()
+  @JoinColumn({ name: 'userId' })
   user: UserEntity;
+
+  @Column()
+  userId: number;
 }
