@@ -6,6 +6,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { RoleType } from 'src/common/constants';
 import { QueryParamsDto } from 'src/common/dtos/queryOptions.dto';
 import { Roles } from 'src/common/rolesDecorator/roles.decorator';
@@ -14,6 +15,7 @@ import { JwtAccessTokenGuard } from 'src/modules/auth/guards/jwtAccessToken.guar
 import { LoanService } from '../services/loan.service';
 
 @Controller('loanservice/v1/admin')
+@ApiTags('Loan')
 export class LoanController {
   constructor(private _loanService: LoanService) {}
 

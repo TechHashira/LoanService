@@ -7,7 +7,7 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
-import { ApiOkResponse } from '@nestjs/swagger';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { AccessTokenDto } from '../dtos/accessTokenDto.dto';
 import { LoginResponseDto } from '../dtos/loginResponse.dto';
 import { RefreshTokenRequestDto } from '../dtos/refreshToken.dto';
@@ -16,6 +16,7 @@ import { AuthService } from '../services/auth.service';
 import { TokenService } from '../services/tocken.service';
 
 @Controller('loanservice/v1/auth')
+@ApiTags('Auth')
 export class AuthController {
   constructor(
     private _authService: AuthService,

@@ -53,14 +53,13 @@ export class WorksheetService {
   }
 
   public async findWorkSheetById(id: number): Promise<WorksheetEntity> {
-    const queryBuilder = this._worksheetRepository.createQueryBuilder(
-      'worksheet_alias',
-    );
+    const queryBuilder = this._worksheetRepository.createQueryBuilder();
 
     try {
       const worksheet = await queryBuilder
-        .where('worksheet_alias.id = :id', { id })
-        .getOneOrFail();
+        .select(['id', 'adminId'])
+        .where('id = :id', { id })
+        .execute();
 
       return worksheet;
     } catch (error) {
@@ -69,14 +68,13 @@ export class WorksheetService {
   }
 
   public async findWorkSheetUserById(id: number): Promise<WorkSheetUserEntity> {
-    const queryBuilder = this._worksheetUserRepository.createQueryBuilder(
-      'worksheetUser_alias',
-    );
+    const queryBuilder = this._worksheetUserRepository.createQueryBuilder();
 
     try {
       const worksheetUser = await queryBuilder
-        .where('worksheetUser_alias.id = :id', { id })
-        .getOneOrFail();
+        .select(['id', 'userId', 'worksheetId'])
+        .where('id = :id', { id })
+        .execute();
 
       return worksheetUser;
     } catch (error) {
@@ -87,13 +85,12 @@ export class WorksheetService {
   public async getAllUsersByWorksheetId(
     id: number,
   ): Promise<Array<WorkSheetUserEntity>> {
-    const queryBuilder = this._worksheetUserRepository.createQueryBuilder(
-      'worksheetUser_alias',
-    );
+    const queryBuilder = this._worksheetUserRepository.createQueryBuilder();
     try {
       const worksheetUsers = await queryBuilder
-        .where('worksheetUser_alias.userId = :id', { id })
-        .getMany();
+        .select(['id', 'userId', 'worksheetId'])
+        .where('worksheetId = :id', { id })
+        .execute();
 
       return worksheetUsers;
     } catch (error) {
@@ -106,10 +103,17 @@ export class WorksheetService {
   ): Promise<Array<WorkSheetUserEntity>> {
     const { take } = queryParamsDto;
     const queryBuilder = this._worksheetUserRepository.createQueryBuilder(
-      'worksheetUser_alias',
+      'worksheet_user',
     );
     try {
-      const worksheetUsers = await queryBuilder.take(take).getMany();
+      const worksheetUsers = await queryBuilder
+        .select([
+          'worksheet_user.id',
+          'worksheet_user.userId',
+          'worksheet_user.worksheetId',
+        ])
+        .take(take)
+        .execute();
 
       return worksheetUsers;
     } catch (error) {
@@ -121,11 +125,12 @@ export class WorksheetService {
     queryParamsDto: QueryParamsDto,
   ): Promise<Array<WorksheetEntity>> {
     const { take } = queryParamsDto;
-    const queryBuilder = this._worksheetRepository.createQueryBuilder(
-      'worksheet_alias',
-    );
+    const queryBuilder = this._worksheetRepository.createQueryBuilder();
     try {
-      const worksheets = await queryBuilder.take(take).getMany();
+      const worksheets = await queryBuilder
+        .select(['id', 'adminId'])
+        .take(take)
+        .execute();
 
       return worksheets;
     } catch (error) {
