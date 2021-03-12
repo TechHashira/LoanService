@@ -16,10 +16,10 @@ export class UserSavingService {
 
   public async createSaving(createSavingDto: CreateSavingDto) {
     try {
-      const { userId, ...auxCreateSavingDto } = { ...createSavingDto };
+      const { userId, monthlySavingRate } = createSavingDto;
       const user = await this._userService.findUserById(userId);
       const saving = this._userSavingRepository.create({
-        ...auxCreateSavingDto,
+        monthlySavingRate,
         user,
       });
       await this._userSavingRepository.save(saving);

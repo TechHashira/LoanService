@@ -9,5 +9,8 @@ export class AdminDto {
   email: string;
 
   @ApiProperty()
+  password: string;
+
+  @ApiProperty()
   role: RoleType;
 }

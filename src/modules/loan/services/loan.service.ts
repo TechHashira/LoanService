@@ -10,7 +10,7 @@ import { LoanRepository } from '../repositories/loan.repository';
 export class LoanService {
   constructor(private _loanRepository: LoanRepository) {}
 
-  public async createLoan(createLoanDto: CreateLoanDto) {
+  public async createLoan(createLoanDto: CreateLoanDto): Promise<LoanEntity> {
     try {
       const loan = this._loanRepository.create({ ...createLoanDto });
       await this._loanRepository.save(loan);

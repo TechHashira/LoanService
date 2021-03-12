@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { UserDto } from 'src/modules/user/dtos/user.dto';
 
 export class UserSavingDto {
   @ApiProperty()
@@ -10,6 +11,6 @@ export class UserSavingDto {
   @ApiProperty()
   monthlySavingRate: number;
 
-  @ApiProperty()
-  userId: number;
+  @ApiProperty({ type: UserDto })
+  userId: UserDto;
 }

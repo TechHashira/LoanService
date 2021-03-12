@@ -43,12 +43,9 @@ export class UserService {
   }
 
   public async findUserById(userId: number): Promise<UserEntity> {
-    const queryBuilder = this._userRepository.createQueryBuilder('user_alias');
-
-    return await queryBuilder
-      .select('*')
-      .where('user_alias.id = :userId', { userId })
-      .execute();
+    return await this._userRepository.findOne({
+      where: { id: userId },
+    });
   }
 
   public async findAllUsers(

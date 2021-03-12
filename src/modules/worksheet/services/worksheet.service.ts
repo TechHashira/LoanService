@@ -39,6 +39,7 @@ export class WorksheetService {
       const worksheet = await this.findWorkSheetById(worksheetId);
       const user = await this._userService.findUserById(userId);
 
+      console.log(worksheet, user);
       const worksheetUser = this._worksheetUserRepository.create({
         worksheet,
         user,
@@ -52,16 +53,13 @@ export class WorksheetService {
     }
   }
 
-  public async findWorkSheetById(id: number): Promise<WorksheetEntity> {
-    const queryBuilder = this._worksheetRepository.createQueryBuilder();
-
+  public async findWorkSheetById(
+    worksheetId: number,
+  ): Promise<WorksheetEntity> {
     try {
-      const worksheet = await queryBuilder
-        .select(['id', 'adminId'])
-        .where('id = :id', { id })
-        .execute();
-
-      return worksheet;
+      return await this._worksheetRepository.findOne({
+        where: { id: worksheetId },
+      });
     } catch (error) {
       throw new WorksheetNotFoundException();
     }

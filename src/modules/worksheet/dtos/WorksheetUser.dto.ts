@@ -1,12 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { UserDto } from 'src/modules/user/dtos/user.dto';
+import { WorksheetDto } from './WorkSheet.dto';
 
 export class WorksheetUserDto {
   @ApiProperty()
   readonly id: number;
 
-  @ApiProperty()
-  readonly userId: number;
+  @ApiProperty({ type: UserDto })
+  readonly user: UserDto;
 
   @ApiProperty()
-  readonly worksheetId: number;
+  readonly worksheet: WorksheetDto;
 }
