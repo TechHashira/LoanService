@@ -6,6 +6,7 @@ import { SavingModule } from '../saving/saving.module';
 import { UserModule } from '../user/user.module';
 import { WorksheetModule } from '../worksheet/worksheet.module';
 import { AdminController } from './controllers/admin.controller';
+import { IndexController } from './controllers/index.controller';
 import { AdminRepository } from './repositories/admin.repository';
 import { AdminService } from './services/admin.service';
 
@@ -22,6 +23,6 @@ import { AdminService } from './services/admin.service';
   ],
   providers: [AdminService],
   exports: [AdminService],
-  controllers: [AdminController],
+  controllers: [AdminController, IndexController],
 })
 export class AdminModule {}
