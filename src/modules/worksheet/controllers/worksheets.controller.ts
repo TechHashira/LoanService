@@ -30,6 +30,7 @@ export class WorksheetsController {
   @UseGuards(JwtAccessTokenGuard, RolesGuard)
   @UseInterceptors(ResponseTransformInterceptor)
   @ApiBearerAuth()
+  @HttpCode(HttpStatus.OK)
   @ApiResponse({
     status: HttpStatus.OK,
     type: GetAllWorksheetsDto,
@@ -45,6 +46,7 @@ export class WorksheetsController {
   @UseGuards(JwtAccessTokenGuard, RolesGuard)
   @UseInterceptors(ResponseTransformInterceptor)
   @ApiBearerAuth()
+  @HttpCode(HttpStatus.OK)
   @ApiResponse({
     status: HttpStatus.OK,
     type: GetAllWorksheetsUserDto,
@@ -60,6 +62,7 @@ export class WorksheetsController {
   @UseGuards(JwtAccessTokenGuard, RolesGuard)
   @UseInterceptors(ResponseTransformInterceptor)
   @ApiBearerAuth()
+  @HttpCode(HttpStatus.OK)
   @ApiResponse({
     status: HttpStatus.OK,
     type: GetAllWorksheetsUserDto,
@@ -77,6 +80,7 @@ export class WorksheetsController {
   @UseGuards(JwtAccessTokenGuard, RolesGuard)
   @UseInterceptors(ResponseTransformInterceptor)
   @ApiBearerAuth()
+  @HttpCode(HttpStatus.OK)
   @ApiResponse({
     status: HttpStatus.OK,
     type: GetAllWorksheetsUserDto,
