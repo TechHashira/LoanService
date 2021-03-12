@@ -11,6 +11,6 @@ cd LoanService
 ###### # 3. Install dependencys
 npm i
 
+###### # 4. Start
+npm start
 
-### Migrations
-npm run migration-run
