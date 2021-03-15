@@ -16,7 +16,6 @@ import { ResponseTransformInterceptor } from 'src/interceptors/responseMapping.i
 import { UserRegisterDto } from 'src/modules/admin/dtos/registerUser.dto';
 import { JwtAccessTokenGuard } from 'src/modules/auth/guards/jwtAccessToken.guard';
 import { CreateLoanDto } from 'src/modules/loan/dtos/createLoan.dto';
-import { LoanResponse } from 'src/modules/loan/dtos/LoanResponse.dto';
 import { LoanService } from 'src/modules/loan/services/loan.service';
 import { CreateSavingDto } from 'src/modules/saving/dtos/createSaving.dto';
 import { UserSavingService } from 'src/modules/saving/services/userSaving.service';
@@ -28,6 +27,7 @@ import { ResponseCreateWorksheetUserDto } from 'src/modules/worksheet/dtos/Respo
 import { WorksheetService } from 'src/modules/worksheet/services/worksheet.service';
 import { ResponseCreatedSavingDto } from '../dtos/ResponseCreatedSaving.dto';
 import { ResponseCreatedUserDto } from '../dtos/ResponseCreatedUser.dto';
+import { ResponseCreateLoanDto } from '../dtos/ResponseCreateLoan.dto';
 
 @Controller('loanservice/v1/admin')
 @ApiTags('Admin')
@@ -77,8 +77,9 @@ export class AdminController {
   @HttpCode(HttpStatus.CREATED)
   @ApiOkResponse({
     status: HttpStatus.CREATED,
-    type: LoanResponse,
+    type: ResponseCreateLoanDto,
     description: 'Successfully Registered',
+    isArray: false,
   })
   async createLoan(@Body() createLoanDtom: CreateLoanDto) {
     return this._loanService.createLoan(createLoanDtom);

@@ -23,9 +23,10 @@ export class WorksheetService {
     try {
       const { adminId } = createWorksheetDto;
       const admin = await this._adminService.findById(adminId);
-      const worksheet = this._worksheetRepository.create({ admin });
-      await this._worksheetRepository.save(worksheet);
-      return worksheet;
+      const { id } = admin;
+      const worksheet = await this._worksheetRepository.create({ adminId: id });
+
+      return await this._worksheetRepository.save(worksheet);
     } catch ({ message }) {
       throw new CreatedFailedException(message);
     }
@@ -39,10 +40,13 @@ export class WorksheetService {
       const worksheet = await this.findWorkSheetById(worksheetId);
       const user = await this._userService.findUserById(userId);
 
-      console.log(worksheet, user);
+      if (!user || !worksheet) {
+        throw new Error('worksheetId or userId not exist');
+      }
+
       const worksheetUser = this._worksheetUserRepository.create({
-        worksheet,
-        user,
+        worksheetId: worksheet.id,
+        userdId: user.id,
       });
 
       await this._worksheetUserRepository.save(worksheetUser);

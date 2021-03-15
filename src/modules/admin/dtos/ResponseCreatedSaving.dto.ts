@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { UserSavingDto } from 'src/modules/saving/dtos/UserSaving.dto';
+import { CreatedSavingDto } from 'src/modules/saving/dtos/CreatedSaving.dto';
 
 export class ResponseCreatedSavingDto {
-  @ApiProperty({ type: UserSavingDto })
-  readonly data: UserSavingDto;
+  @ApiProperty({ type: CreatedSavingDto })
+  readonly data: CreatedSavingDto;
 }
