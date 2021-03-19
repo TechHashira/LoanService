@@ -50,7 +50,7 @@ export class AdminService {
 
       return admin;
     } catch (error) {
-      throw new UserNotFoundException();
+      throw new UserNotFoundException('User noy exist');
     }
   }
 }

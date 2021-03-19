@@ -1,5 +1,6 @@
 import { AdminEntity } from 'src/modules/admin/entities/admin.entity';
 import {
+  Column,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -14,9 +15,11 @@ export class WorksheetEntity {
   id: number;
 
   @ManyToOne(() => AdminEntity, (admin) => admin.worksheet)
-  @JoinColumn()
+  @JoinColumn({ name: 'adminId' })
   admin: AdminEntity;
 
+  @Column()
+  adminId: number;
   @OneToMany(
     () => WorkSheetUserEntity,
     (worksheetUser) => worksheetUser.worksheet,
