@@ -97,8 +97,8 @@
     "testEnvironment": "node"
   },
   "husky": {
-    "hooks":{
-      "commit-msg":"commitlint -E HUSKY_GIT_PARAMS",
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-commit": "npm run format && npm run lint"
     }
   }
